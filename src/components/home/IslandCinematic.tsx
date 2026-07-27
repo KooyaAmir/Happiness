@@ -61,8 +61,8 @@ export function IslandCinematic() {
 
       // Keep active index in 0..2 for the full scroll range.
       const segment = Math.min(progress * islands.length, islands.length - 0.001);
-      const active = Math.floor(segment);
-      const local = segment - active;
+      const active = Math.min(islands.length - 1, Math.max(0, Math.round(segment)));
+      const local = Math.min(1, Math.max(0, segment - Math.floor(segment)));
 
       layers.forEach((layer, index) => {
         const media = layer.querySelector<HTMLElement>("[data-media]");

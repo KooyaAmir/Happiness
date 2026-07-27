@@ -10,6 +10,12 @@ export type Venue = {
   dining?: string[];
 };
 
+export type LocationMoment = {
+  title: string;
+  copy: string;
+  image: string;
+};
+
 export type Location = {
   slug: LocationSlug;
   name: string;
@@ -20,6 +26,9 @@ export type Location = {
   venues: Venue[];
   highlights: string[];
   foodScene?: string;
+  atmosphere: string;
+  moments: LocationMoment[];
+  gallery: string[];
 };
 
 export const locations: Location[] = [
@@ -27,12 +36,38 @@ export const locations: Location[] = [
     slug: "boracay",
     name: "Boracay",
     tagline: "Beach life, skate café, and island nights",
+    atmosphere: "White sand mornings. Bowl sessions. Happy hour that starts early.",
     summary:
       "Our newest and largest location — thoughtfully designed dorms and private rooms, skate café, pool, shop, restaurant, bar, and wellness space on iconic Boracay.",
     heroImage: "/images/locations/boracay-sunset.png",
     cardImage: "/images/locations/boracay-white-beach.png",
     foodScene:
       "Skate café all day, Middle Eastern plates at night, and a happy hour that starts early.",
+    moments: [
+      {
+        title: "White Beach light",
+        copy: "Powder sand, turquoise shallows, and the long walk that somehow never gets old.",
+        image: "/images/locations/boracay-white-beach.png",
+      },
+      {
+        title: "Skate café culture",
+        copy: "Coffee, bites, and the bowl between beach sessions — the social heart of Happiness Boracay.",
+        image: "/images/experiences/skate-cafe.png",
+      },
+      {
+        title: "Island nights",
+        copy: "Happy hour energy, Middle Eastern plates, and the soft gold of a Boracay sunset.",
+        image: "/images/locations/boracay-sunset.png",
+      },
+    ],
+    gallery: [
+      "/images/reference/27-boracay-24.jpg",
+      "/images/locations/boracay-white-beach.png",
+      "/images/experiences/skate-cafe.png",
+      "/images/stays/hostel-pool.png",
+      "/images/locations/boracay-sunset.png",
+      "/images/reference/53-atv-boracay-1.jpg",
+    ],
     venues: [
       {
         slug: "happiness-hostel",
@@ -56,12 +91,38 @@ export const locations: Location[] = [
     slug: "el-nido",
     name: "El Nido",
     tagline: "Limestone cliffs, lagoons, and boutique stays",
+    atmosphere: "Boat mornings. Lagoon blue. Jungle evenings that stretch long.",
     summary:
       "Hostel in town plus boutique villas and resort in Corong Corong — the gateway to island hopping, lagoons, and slow evenings in Palawan.",
     heroImage: "/images/locations/el-nido-lagoon.png",
     cardImage: "/images/locations/el-nido-lagoon.png",
     foodScene:
       "Town restaurant energy, Hama Street food truck bites, and jungle resort dining.",
+    moments: [
+      {
+        title: "Big Lagoon mornings",
+        copy: "Karst cliffs, glass water, and the hush that hits the moment the boat engines cut.",
+        image: "/images/reference/34-big-lagoon-.jpg",
+      },
+      {
+        title: "Town pulse",
+        copy: "Sirena Street energy — walk out the door into boats, cafés, and night buzz.",
+        image: "/images/locations/location-el-nido.jpg",
+      },
+      {
+        title: "Boutique calm",
+        copy: "Villas and jungle resort nights when you want the lagoons without the noise.",
+        image: "/images/stays/boutique-villa.png",
+      },
+    ],
+    gallery: [
+      "/images/locations/el-nido-lagoon.png",
+      "/images/heroes/home-hero.png",
+      "/images/reference/34-big-lagoon-.jpg",
+      "/images/reference/43-nacpan.webp",
+      "/images/experiences/el-nido-tour.png",
+      "/images/stays/boutique-villa.png",
+    ],
     venues: [
       {
         slug: "happiness-hostel",
@@ -97,11 +158,37 @@ export const locations: Location[] = [
     slug: "siargao",
     name: "Siargao",
     tagline: "Surf capital energy, slow island living",
+    atmosphere: "Palm roads. Glassy waves. The kind of sunset you plan your day around.",
     summary:
       "Hostel and beach resort along Tourism Road — Goodies, HResto, beach bar, food truck, and the Happiness Surf Retreat base.",
     heroImage: "/images/locations/siargao-palm-road.png",
     cardImage: "/images/stays/siargao-beach-resort.png",
     foodScene: "Goodies all day, HResto plates, BBar nights, and beach-bar sundowners.",
+    moments: [
+      {
+        title: "Palm road arrivals",
+        copy: "That first drive under the canopy — Tourism Road, salt air, and the island slowing you down.",
+        image: "/images/locations/siargao-palm-road.png",
+      },
+      {
+        title: "Surf weeks",
+        copy: "Zero-to-hero sessions, oceanfront mornings, and the Happiness Surf Retreat rhythm.",
+        image: "/images/experiences/surf-wave.png",
+      },
+      {
+        title: "Goodies & nights",
+        copy: "Café days, BBar energy, bingo Mondays, and Funky Wednesdays that keep the island social.",
+        image: "/images/experiences/events-nightlife.png",
+      },
+    ],
+    gallery: [
+      "/images/locations/siargao-palm-road.png",
+      "/images/reference/11-iao-activity-2.jpg",
+      "/images/experiences/surf-wave.png",
+      "/images/stays/siargao-beach-resort.png",
+      "/images/locations/location-siargao-activity-1.jpg",
+      "/images/experiences/community.png",
+    ],
     venues: [
       {
         slug: "happiness-hostel",

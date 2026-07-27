@@ -1,6 +1,8 @@
 import Image from "next/image";
 import Link from "next/link";
+import { CursorGlow } from "@/components/home/CursorGlow";
 import { HeroSlideshow } from "@/components/home/HeroSlideshow";
+import { HorizontalTours } from "@/components/home/HorizontalTours";
 import { IslandCinematic } from "@/components/home/IslandCinematic";
 import { OceanCanvas } from "@/components/home/OceanCanvas";
 import { ParallaxMedia } from "@/components/home/ParallaxMedia";
@@ -82,7 +84,7 @@ function MarqueeBand() {
 
 export default async function Home() {
   const [featuredTours, posts, events, jobs] = await Promise.all([
-    getPublishedTours({ limit: 4 }),
+    getPublishedTours({ limit: 8 }),
     getPublishedPosts(3),
     getPublishedEvents("all"),
     getOpenJobs(),
@@ -93,6 +95,7 @@ export default async function Home() {
 
   return (
     <>
+      <CursorGlow />
       <HeroSlideshow />
 
       <MarqueeBand />
@@ -159,39 +162,28 @@ export default async function Home() {
         </Container>
       </Section>
 
-      <Section tone="mist">
-        <Container className="space-y-10">
+      <Section tone="mist" className="overflow-hidden">
+        <Container className="space-y-8">
           <div className="flex flex-col gap-4 md:flex-row md:items-end md:justify-between hp-reveal">
             <div className="max-w-2xl space-y-3">
               <Text as="p" variant="label" tone="lagoon">
                 Travel & tours
               </Text>
-              <Text as="h2" variant="display">
-                Adventures worth enquiring about.
-              </Text>
+              <div className="hp-mask">
+                <Text as="h2" variant="display" className="hp-mask-reveal">
+                  Adventures worth enquiring about.
+                </Text>
+              </div>
+              <Text tone="muted">Drag or scroll sideways — eight picks from the catalog.</Text>
             </div>
             <Button href="/tours" variant="secondary">
               View all tours
             </Button>
           </div>
-          <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
-            {featuredTours.map((tour) => (
-              <div key={tour.id} className="hp-reveal">
-                <ImageCard
-                  href={`/tours/${tour.destinationSlug}/${tour.slug}`}
-                  image={tour.image || "/images/heroes/tours-hero.png"}
-                  title={tour.title}
-                  copy={
-                    tour.priceOnEnquiry
-                      ? `${tour.duration || "Flexible"} · Price on enquiry`
-                      : `${tour.duration || "Flexible"} · from ₱${tour.priceFrom?.toLocaleString() || "—"}`
-                  }
-                  meta={tour.destinationName}
-                />
-              </div>
-            ))}
-          </div>
         </Container>
+        <div className="mt-8 pl-[var(--hp-gutter)]">
+          <HorizontalTours tours={featuredTours} />
+        </div>
       </Section>
 
       <Section tone="ink">

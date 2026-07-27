@@ -5,7 +5,11 @@ import { SiteHeader } from "@/components/layout/SiteHeader";
 
 export function AppHeader() {
   const pathname = usePathname();
-  const transparent = pathname === "/";
+  const transparent =
+    pathname === "/" ||
+    pathname === "/stays/boracay" ||
+    pathname === "/stays/el-nido" ||
+    pathname === "/stays/siargao";
 
   return <SiteHeader transparent={transparent} />;
 }
