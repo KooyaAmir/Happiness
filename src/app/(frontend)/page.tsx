@@ -1,8 +1,6 @@
 import Image from "next/image";
-import { CursorGlow } from "@/components/home/CursorGlow";
 import { HeroSlideshow } from "@/components/home/HeroSlideshow";
 import { HorizontalTours } from "@/components/home/HorizontalTours";
-import { IslandCinematic } from "@/components/home/IslandCinematic";
 import { OceanCanvas } from "@/components/home/OceanCanvas";
 import { TripStarter } from "@/components/home/TripStarter";
 import { Button } from "@/components/ui/Button";
@@ -31,12 +29,9 @@ export default async function Home() {
 
   return (
     <>
-      <CursorGlow />
       <HeroSlideshow />
 
       <TripStarter />
-
-      <IslandCinematic />
 
       <Section tone="mist" className="overflow-hidden">
         <Container className="space-y-8">
@@ -50,7 +45,7 @@ export default async function Home() {
                   Adventures worth enquiring about.
                 </Text>
               </div>
-              <Text tone="muted">Drag or scroll sideways — eight picks from the catalog.</Text>
+              <Text tone="muted">Swipe or drag to browse featured trips.</Text>
             </div>
             <Button href="/tours" variant="secondary">
               View all tours
