@@ -1,8 +1,6 @@
 import type { Metadata } from "next";
 import { Figtree, IBM_Plex_Mono, Syne } from "next/font/google";
-import { AppHeader } from "@/components/layout/AppHeader";
-import { SiteFooter } from "@/components/layout/SiteFooter";
-import "./globals.css";
+import "./(frontend)/globals.css";
 
 const display = Syne({
   variable: "--font-display",
@@ -41,11 +39,7 @@ export default function RootLayout({
       lang="en"
       className={`${display.variable} ${body.variable} ${mono.variable} h-full`}
     >
-      <body className="min-h-full flex flex-col antialiased">
-        <AppHeader />
-        <main className="flex-1">{children}</main>
-        <SiteFooter />
-      </body>
+      <body className="min-h-full antialiased">{children}</body>
     </html>
   );
 }

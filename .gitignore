@@ -42,3 +42,12 @@ next-env.d.ts
 
 # local reference downloads from live WP site (not for production)
 /public/images/reference/
+
+# Payload / local DB
+.env
+.env.*
+!.env.example
+*.db
+*.db-*
+/media
+

@@ -16,11 +16,20 @@ npm run dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000).  
+Admin dashboard: [http://localhost:3000/admin](http://localhost:3000/admin).  
 Design system: [http://localhost:3000/design-system](http://localhost:3000/design-system).
+
+Seed TREVL tours into Payload:
+
+```bash
+npm run seed:tours
+```
 
 ## Project docs
 
 - [Design system](./docs/DESIGN-SYSTEM.md)
+- [Images](./docs/IMAGES.md)
+- [Payload dashboard](./docs/PAYLOAD.md)
 
 ## Git
 

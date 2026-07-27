@@ -3,9 +3,13 @@ import { Container } from "@/components/ui/Container";
 import { ImageCard } from "@/components/ui/PageHero";
 import { Section } from "@/components/ui/Section";
 import { Text } from "@/components/ui/Text";
-import { experiences, featuredTours, locations } from "@/content/site";
+import { experiences, locations } from "@/content/site";
+import { getPublishedTours } from "@/lib/tours";
 
-export default function Home() {
+export const dynamic = "force-dynamic";
+
+export default async function Home() {
+  const featuredTours = await getPublishedTours({ limit: 4 });
   return (
     <>
       <div className="relative min-h-[100svh] overflow-hidden text-hp-foam">
@@ -97,12 +101,16 @@ export default function Home() {
           <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
             {featuredTours.map((tour) => (
               <ImageCard
-                key={tour.slug}
-                href={`/tours/${tour.destination.toLowerCase().replace(" ", "-")}/${tour.slug}`}
-                image={tour.image}
+                key={tour.id}
+                href={`/tours/${tour.destinationSlug}/${tour.slug}`}
+                image={tour.image || "/images/heroes/tours-hero.png"}
                 title={tour.title}
-                copy={`${tour.duration} · from ${tour.from}`}
-                meta={tour.destination}
+                copy={
+                  tour.priceOnEnquiry
+                    ? `${tour.duration || "Flexible"} · Price on enquiry`
+                    : `${tour.duration || "Flexible"} · from ₱${tour.priceFrom?.toLocaleString() || "—"}`
+                }
+                meta={tour.destinationName}
               />
             ))}
           </div>

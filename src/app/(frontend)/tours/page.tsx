@@ -4,31 +4,27 @@ import { Container } from "@/components/ui/Container";
 import { ImageCard, PageHero } from "@/components/ui/PageHero";
 import { Section } from "@/components/ui/Section";
 import { Text } from "@/components/ui/Text";
-import { featuredTours } from "@/content/site";
+import { getDestinationsWithTours, getPublishedTours } from "@/lib/tours";
 
 export const metadata: Metadata = {
   title: "Tours",
   description: "Tailor-made vacation packages and day tours across the Philippines.",
 };
 
-const destinations = [
-  "El Nido",
-  "Boracay",
-  "Siargao",
-  "Bohol",
-  "Cebu",
-  "Port Barton",
-  "Coron",
-  "Manila",
-];
+export const dynamic = "force-dynamic";
 
-export default function ToursPage() {
+export default async function ToursPage() {
+  const [destinations, tours] = await Promise.all([
+    getDestinationsWithTours(),
+    getPublishedTours({ limit: 24 }),
+  ]);
+
   return (
     <>
       <PageHero
         eyebrow="Travel & tours"
         title="Tailor-made island adventures."
-        description="Day tours, activities, and multi-day packages — enquire with our specialists. Full TREVL catalog migration comes next."
+        description="Day tours, activities, and multi-day packages across the Philippines — enquire with our specialists."
         image="/images/heroes/tours-hero.png"
       />
 
@@ -40,12 +36,13 @@ export default function ToursPage() {
           <div className="flex flex-wrap gap-2">
             {destinations.map((destination) => (
               <Button
-                key={destination}
-                href={`/tours/${destination.toLowerCase().replace(" ", "-")}`}
+                key={destination.slug}
+                href={`/tours/${destination.slug}`}
                 variant="ghost"
                 className="border border-hp-border text-hp-ink"
               >
-                {destination}
+                {destination.name}
+                {destination.count ? ` (${destination.count})` : ""}
               </Button>
             ))}
           </div>
@@ -56,21 +53,27 @@ export default function ToursPage() {
         <Container className="space-y-8">
           <div className="max-w-2xl space-y-3">
             <Text as="h2" variant="title">
-              Popular trips
+              All TREVL trips
             </Text>
             <Text tone="muted">
-              Enquiry-based booking for now — tell us dates and travellers, we handle the rest.
+              {tours.length
+                ? `${tours.length} tours migrated into the dashboard. Enquiry-based booking for now.`
+                : "Run npm run seed:tours to migrate the live catalog into Payload."}
             </Text>
           </div>
           <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
-            {featuredTours.map((tour) => (
+            {tours.map((tour) => (
               <ImageCard
-                key={tour.slug}
-                href={`/tours/${tour.destination.toLowerCase().replace(" ", "-")}/${tour.slug}`}
-                image={tour.image}
+                key={tour.id}
+                href={`/tours/${tour.destinationSlug}/${tour.slug}`}
+                image={tour.image || "/images/heroes/tours-hero.png"}
                 title={tour.title}
-                copy={`${tour.duration} · from ${tour.from}`}
-                meta={tour.destination}
+                copy={
+                  tour.priceOnEnquiry
+                    ? `${tour.duration || "Flexible"} · Price on enquiry`
+                    : `${tour.duration || "Flexible"} · from ₱${tour.priceFrom?.toLocaleString() || "—"}`
+                }
+                meta={tour.destinationName}
               />
             ))}
           </div>
