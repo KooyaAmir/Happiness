@@ -1,5 +1,4 @@
 import Image from "next/image";
-import Link from "next/link";
 import { CursorGlow } from "@/components/home/CursorGlow";
 import { HeroSlideshow } from "@/components/home/HeroSlideshow";
 import { HorizontalTours } from "@/components/home/HorizontalTours";
