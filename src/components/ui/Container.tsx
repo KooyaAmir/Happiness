@@ -1,13 +1,14 @@
-import type { ReactNode } from "react";
+import type { CSSProperties, ReactNode } from "react";
 import { cn } from "@/lib/cn";
 
 type ContainerProps = {
   children: ReactNode;
   className?: string;
   wide?: boolean;
+  style?: CSSProperties;
 };
 
-export function Container({ children, className, wide }: ContainerProps) {
+export function Container({ children, className, wide, style }: ContainerProps) {
   return (
     <div
       className={cn(
@@ -15,6 +16,7 @@ export function Container({ children, className, wide }: ContainerProps) {
         wide ? "max-w-[var(--hp-container-wide)]" : "max-w-[var(--hp-container)]",
         className,
       )}
+      style={style}
     >
       {children}
     </div>

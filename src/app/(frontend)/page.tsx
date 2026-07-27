@@ -1,5 +1,8 @@
 import Image from "next/image";
 import Link from "next/link";
+import { HeroSlideshow } from "@/components/home/HeroSlideshow";
+import { OceanCanvas } from "@/components/home/OceanCanvas";
+import { TiltCard } from "@/components/home/TiltCard";
 import { Button } from "@/components/ui/Button";
 import { Container } from "@/components/ui/Container";
 import { ImageCard } from "@/components/ui/PageHero";
@@ -12,12 +15,6 @@ import { getPublishedPosts, postCategoryLabel } from "@/lib/posts";
 import { getPublishedTours } from "@/lib/tours";
 
 export const dynamic = "force-dynamic";
-
-const heroStats = [
-  { value: "03", label: "Islands" },
-  { value: "07", label: "Stays & venues" },
-  { value: "40+", label: "Tours & packages" },
-];
 
 const marqueeItems = [
   "Boracay",
@@ -67,76 +64,23 @@ export default async function Home() {
 
   return (
     <>
-      <div className="relative min-h-[100svh] overflow-hidden text-hp-foam">
-        <div aria-hidden className="absolute inset-0 bg-hp-ink" />
-        <div
-          aria-hidden
-          className="absolute inset-0 opacity-70 hp-kenburns"
-          style={{
-            backgroundImage: "url('/images/heroes/home-hero.png')",
-            backgroundSize: "cover",
-            backgroundPosition: "center",
-          }}
-        />
-        <div
-          aria-hidden
-          className="absolute inset-0 bg-gradient-to-t from-hp-ink via-hp-ink/55 to-hp-ink/25"
-        />
-
-        <Container className="relative flex min-h-[100svh] flex-col justify-end pb-12 pt-[calc(var(--hp-header-h)+2rem)] md:pb-16">
-          <div className="max-w-3xl space-y-6">
-            <Text as="p" variant="label" tone="citrus" className="hp-fade-up">
-              Boracay · El Nido · Siargao
-            </Text>
-            <Text as="h1" variant="hero" tone="inverse" className="hp-fade-up hp-fade-up-delay-1">
-              Island life, designed for joy.
-            </Text>
-            <Text
-              variant="lede"
-              tone="inverse"
-              className="max-w-xl opacity-85 hp-fade-up hp-fade-up-delay-2"
-            >
-              Stays, tours, and soulful spaces across Boracay, El Nido, and
-              Siargao — one brand, three islands, endless reasons to stay longer.
-            </Text>
-            <div className="flex flex-wrap gap-3 pt-2 hp-fade-up hp-fade-up-delay-3">
-              <Button href="/book" size="lg">
-                Book your stay
-              </Button>
-              <Button href="/tours" size="lg" variant="ghost" className="border-hp-foam text-hp-foam">
-                Explore tours
-              </Button>
-            </div>
-          </div>
-
-          <div className="mt-12 grid max-w-xl grid-cols-3 gap-6 border-t border-white/20 pt-6 hp-fade-up hp-fade-up-delay-3">
-            {heroStats.map((stat) => (
-              <div key={stat.label}>
-                <p className="font-display text-[length:var(--hp-text-2xl)] leading-[var(--hp-leading-tight)] tracking-[var(--hp-tracking-display)]">
-                  {stat.value}
-                </p>
-                <p className="mt-1 font-mono text-[length:var(--hp-text-xs)] uppercase tracking-[var(--hp-tracking-label)] opacity-70">
-                  {stat.label}
-                </p>
-              </div>
-            ))}
-          </div>
-        </Container>
-      </div>
+      <HeroSlideshow />
 
       <MarqueeBand />
 
       <Section tone="foam">
         <Container className="space-y-10">
-          <div className="flex flex-col gap-4 md:flex-row md:items-end md:justify-between hp-reveal">
+          <div className="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
             <div className="max-w-2xl space-y-3">
-              <Text as="p" variant="label" tone="lagoon">
+              <Text as="p" variant="label" tone="lagoon" className="hp-reveal">
                 Our locations
               </Text>
-              <Text as="h2" variant="display">
-                Three islands. One Happiness.
-              </Text>
-              <Text tone="muted">
+              <div className="hp-mask">
+                <Text as="h2" variant="display" className="hp-mask-reveal">
+                  Three islands. One Happiness.
+                </Text>
+              </div>
+              <Text tone="muted" className="hp-reveal">
                 Hostels, boutique stays, food, and experiences — each island with its own rhythm.
               </Text>
             </div>
@@ -146,36 +90,39 @@ export default async function Home() {
           </div>
           <div className="grid gap-5 md:grid-cols-3">
             {locations.map((location, index) => (
-              <Link
-                key={location.slug}
-                href={`/stays/${location.slug}`}
-                className="group relative block overflow-hidden rounded-[var(--hp-radius-lg)] hp-reveal focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--hp-focus)]"
-              >
-                <div className="relative aspect-[3/4] overflow-hidden">
-                  <Image
-                    src={location.cardImage}
-                    alt=""
-                    fill
-                    className="object-cover transition-transform duration-[var(--hp-duration-slow)] ease-[var(--hp-ease-out)] group-hover:scale-105"
-                    sizes="(max-width: 768px) 100vw, 33vw"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-hp-ink/90 via-hp-ink/20 to-hp-ink/10" />
-                  <span className="absolute left-5 top-5 font-mono text-[length:var(--hp-text-xs)] uppercase tracking-[var(--hp-tracking-label)] text-hp-foam/80">
-                    {String(index + 1).padStart(2, "0")}
-                  </span>
-                  <div className="absolute inset-x-0 bottom-0 space-y-2 p-5 text-hp-foam">
-                    <Text as="h3" variant="title" tone="inverse">
-                      {location.name}
-                    </Text>
-                    <Text tone="inverse" className="opacity-80">
-                      {location.tagline}
-                    </Text>
-                    <p className="pt-1 font-mono text-[length:var(--hp-text-xs)] uppercase tracking-[var(--hp-tracking-label)] text-hp-citrus opacity-0 transition-opacity duration-[var(--hp-duration)] group-hover:opacity-100">
-                      Explore {location.name} →
-                    </p>
+              <TiltCard key={location.slug} className="hp-reveal">
+                <Link
+                  href={`/stays/${location.slug}`}
+                  className="group relative block overflow-hidden rounded-[var(--hp-radius-lg)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--hp-focus)]"
+                >
+                  <div className="relative aspect-[3/4] overflow-hidden">
+                    <div className="absolute inset-0 hp-zoom-reveal">
+                      <Image
+                        src={location.cardImage}
+                        alt=""
+                        fill
+                        className="object-cover transition-transform duration-[var(--hp-duration-slow)] ease-[var(--hp-ease-out)] group-hover:scale-105"
+                        sizes="(max-width: 768px) 100vw, 33vw"
+                      />
+                    </div>
+                    <div className="absolute inset-0 bg-gradient-to-t from-hp-ink/90 via-hp-ink/20 to-hp-ink/10" />
+                    <span className="absolute left-5 top-5 font-mono text-[length:var(--hp-text-xs)] uppercase tracking-[var(--hp-tracking-label)] text-hp-foam/80">
+                      {String(index + 1).padStart(2, "0")}
+                    </span>
+                    <div className="absolute inset-x-0 bottom-0 space-y-2 p-5 text-hp-foam">
+                      <Text as="h3" variant="title" tone="inverse">
+                        {location.name}
+                      </Text>
+                      <Text tone="inverse" className="opacity-80">
+                        {location.tagline}
+                      </Text>
+                      <p className="pt-1 font-mono text-[length:var(--hp-text-xs)] uppercase tracking-[var(--hp-tracking-label)] text-hp-citrus opacity-0 transition-opacity duration-[var(--hp-duration)] group-hover:opacity-100">
+                        Explore {location.name} →
+                      </p>
+                    </div>
                   </div>
-                </div>
-              </Link>
+                </Link>
+              </TiltCard>
             ))}
           </div>
         </Container>
@@ -365,14 +312,17 @@ export default async function Home() {
           className="object-cover"
           sizes="100vw"
         />
-        <div className="absolute inset-0 bg-hp-ink/60" />
+        <OceanCanvas className="absolute inset-0 h-full w-full opacity-95" />
+        <div className="absolute inset-0 bg-hp-ink/25" />
         <Container className="relative flex min-h-[56svh] flex-col items-start justify-center gap-6 py-[var(--hp-space-10)]">
           <Text as="p" variant="label" tone="citrus" className="hp-reveal">
             Plan your trip
           </Text>
-          <Text as="h2" variant="display" tone="inverse" className="max-w-2xl hp-reveal">
-            Ready for island time?
-          </Text>
+          <div className="hp-mask max-w-2xl">
+            <Text as="h2" variant="display" tone="inverse" className="hp-mask-reveal">
+              Ready for island time?
+            </Text>
+          </div>
           <Text variant="lede" tone="inverse" className="max-w-xl opacity-85 hp-reveal">
             Tell us where you want to wake up — our team on the ground will
             sort the rest, from beds to boats.
