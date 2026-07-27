@@ -6,13 +6,12 @@ import { Text } from "@/components/ui/Text";
 export default function Home() {
   return (
     <div className="relative min-h-[100svh] overflow-hidden text-hp-foam">
-      <div aria-hidden className="absolute inset-0 hp-grain" />
+      <div aria-hidden className="absolute inset-0 bg-hp-ink" />
       <div
         aria-hidden
-        className="absolute inset-0 opacity-40 hp-kenburns"
+        className="absolute inset-0 opacity-70 hp-kenburns"
         style={{
-          backgroundImage:
-            "url('https://images.unsplash.com/photo-1518509562904-e7ef99cdcc86?auto=format&fit=crop&w=2400&q=80')",
+          backgroundImage: "url('/images/heroes/home-hero.png')",
           backgroundSize: "cover",
           backgroundPosition: "center",
         }}

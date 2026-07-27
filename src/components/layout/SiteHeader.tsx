@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import { Button } from "@/components/ui/Button";
 import { Container } from "@/components/ui/Container";
@@ -26,11 +27,18 @@ export function SiteHeader({ transparent = false }: SiteHeaderProps) {
       )}
     >
       <Container className="flex h-full items-center justify-between gap-6">
-        <Link
-          href="/"
-          className="font-display text-lg font-semibold tracking-[0.08em] uppercase transition-opacity hover:opacity-80"
-        >
-          Happiness
+        <Link href="/" className="relative flex h-12 w-12 shrink-0 items-center transition-opacity hover:opacity-80">
+          <Image
+            src="/brand/happiness-logo.png"
+            alt="Happiness Philippines"
+            width={48}
+            height={48}
+            className={cn(
+              "h-12 w-12 object-contain",
+              transparent ? "brightness-0 invert" : undefined,
+            )}
+            priority
+          />
         </Link>
 
         <nav className="hidden items-center gap-7 lg:flex" aria-label="Primary">
