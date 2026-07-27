@@ -1,20 +1,17 @@
 import Image from "next/image";
 import Link from "next/link";
 import { CursorGlow } from "@/components/home/CursorGlow";
-import { HappinessMask } from "@/components/home/HappinessMask";
 import { HeroSlideshow } from "@/components/home/HeroSlideshow";
 import { HorizontalTours } from "@/components/home/HorizontalTours";
 import { IslandCinematic } from "@/components/home/IslandCinematic";
 import { OceanCanvas } from "@/components/home/OceanCanvas";
-import { ParallaxMedia } from "@/components/home/ParallaxMedia";
-import { PhotoOrbit } from "@/components/home/PhotoOrbit";
-import { TiltCard } from "@/components/home/TiltCard";
+import { TripStarter } from "@/components/home/TripStarter";
 import { Button } from "@/components/ui/Button";
 import { Container } from "@/components/ui/Container";
 import { ImageCard } from "@/components/ui/PageHero";
 import { Section } from "@/components/ui/Section";
 import { Text } from "@/components/ui/Text";
-import { experiences, locations } from "@/content/site";
+import { experiences } from "@/content/site";
 import { getPublishedEvents, locationLabel } from "@/lib/events";
 import { getOpenJobs, jobLocationLabel } from "@/lib/jobs";
 import { getPublishedPosts, postCategoryLabel } from "@/lib/posts";
@@ -38,71 +35,9 @@ export default async function Home() {
       <CursorGlow />
       <HeroSlideshow />
 
-      <HappinessMask />
-
-      <PhotoOrbit />
+      <TripStarter />
 
       <IslandCinematic />
-
-      <Section tone="foam">
-        <Container className="space-y-10">
-          <div className="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
-            <div className="max-w-2xl space-y-3">
-              <Text as="p" variant="label" tone="lagoon" className="hp-reveal">
-                Pick a base
-              </Text>
-              <div className="hp-mask">
-                <Text as="h2" variant="display" className="hp-mask-reveal">
-                  Where will you wake up?
-                </Text>
-              </div>
-              <Text tone="muted" className="hp-reveal">
-                Hostels, boutique stays, food, and experiences — each island with its own rhythm.
-              </Text>
-            </div>
-            <Button href="/stays" variant="secondary">
-              All stays
-            </Button>
-          </div>
-          <div className="grid gap-5 md:grid-cols-3">
-            {locations.map((location, index) => (
-              <TiltCard key={location.slug} className="hp-reveal">
-                <Link
-                  href={`/stays/${location.slug}`}
-                  className="group relative block overflow-hidden rounded-[var(--hp-radius-lg)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--hp-focus)]"
-                >
-                  <div className="relative aspect-[3/4] overflow-hidden">
-                    <ParallaxMedia speed={0.22 + index * 0.06}>
-                      <Image
-                        src={location.cardImage}
-                        alt=""
-                        fill
-                        className="object-cover"
-                        sizes="(max-width: 768px) 100vw, 33vw"
-                      />
-                    </ParallaxMedia>
-                    <div className="absolute inset-0 bg-gradient-to-t from-hp-ink/90 via-hp-ink/20 to-hp-ink/10" />
-                    <span className="absolute left-5 top-5 font-mono text-[length:var(--hp-text-xs)] uppercase tracking-[var(--hp-tracking-label)] text-hp-foam/80">
-                      {String(index + 1).padStart(2, "0")}
-                    </span>
-                    <div className="absolute inset-x-0 bottom-0 space-y-2 p-5 text-hp-foam">
-                      <Text as="h3" variant="title" tone="inverse">
-                        {location.name}
-                      </Text>
-                      <Text tone="inverse" className="opacity-80">
-                        {location.tagline}
-                      </Text>
-                      <p className="pt-1 font-mono text-[length:var(--hp-text-xs)] uppercase tracking-[var(--hp-tracking-label)] text-hp-citrus opacity-0 transition-opacity duration-[var(--hp-duration)] group-hover:opacity-100">
-                        Explore {location.name} →
-                      </p>
-                    </div>
-                  </div>
-                </Link>
-              </TiltCard>
-            ))}
-          </div>
-        </Container>
-      </Section>
 
       <Section tone="mist" className="overflow-hidden">
         <Container className="space-y-8">
