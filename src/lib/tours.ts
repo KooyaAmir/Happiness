@@ -1,5 +1,6 @@
 import type { Destination, Tour } from "@/payload-types";
 import { getPayloadClient } from "@/lib/payload";
+import { resolveTourImage } from "@/lib/tour-images";
 
 export type TourCard = {
   id: number;
@@ -16,30 +17,28 @@ export type TourCard = {
   summary?: string | null;
 };
 
-function mediaUrl(tour: Tour) {
-  if (tour.imageUrl) return tour.imageUrl;
-  if (tour.image && typeof tour.image === "object" && tour.image.url) {
-    return tour.image.url;
-  }
-  return "/images/heroes/tours-hero.png";
-}
-
 function mapTour(tour: Tour): TourCard {
   const destination =
     typeof tour.destination === "object" && tour.destination
       ? (tour.destination as Destination)
       : null;
+  const destinationSlug = destination?.slug || "philippines";
+
+  const uploadedUrl =
+    tour.image && typeof tour.image === "object" && tour.image.url
+      ? tour.image.url
+      : tour.imageUrl;
 
   return {
     id: tour.id,
     title: tour.title,
     slug: tour.slug,
-    destinationSlug: destination?.slug || "philippines",
+    destinationSlug,
     destinationName: destination?.name || "Philippines",
     duration: tour.duration,
     priceFrom: tour.priceFrom,
     priceOnEnquiry: tour.priceOnEnquiry,
-    image: mediaUrl(tour),
+    image: resolveTourImage({ slug: tour.slug, destinationSlug, uploadedUrl }),
     popular: tour.popular,
     kind: tour.kind,
     summary: tour.summary,

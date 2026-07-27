@@ -19,7 +19,7 @@ export default function FoodPage() {
         eyebrow="Eat & drink"
         title="Food is where Happiness started."
         description="Cafés, restaurants, bars, and island happy hours — the social heart of every Happiness location."
-        image="/images/food/happiness-dining.png"
+        image="/images/food/restaurant.png"
       />
 
       <Section tone="foam">

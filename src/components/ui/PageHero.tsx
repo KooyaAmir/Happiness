@@ -82,10 +82,10 @@ export function ImageCard({ href, image, title, copy, meta }: ImageCardProps) {
               {meta}
             </Text>
           ) : null}
-          <Text as="h3" variant="heading" tone="inverse">
+          <Text as="h3" variant="heading" tone="inverse" className="line-clamp-3">
             {title}
           </Text>
-          <Text tone="inverse" className="opacity-80">
+          <Text tone="inverse" className="line-clamp-2 opacity-80">
             {copy}
           </Text>
         </div>

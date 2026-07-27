@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/Button";
 import { Container } from "@/components/ui/Container";
 import { cn } from "@/lib/cn";
@@ -23,12 +23,23 @@ type SiteHeaderProps = {
 
 export function SiteHeader({ transparent = false }: SiteHeaderProps) {
   const [open, setOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    if (!transparent) return;
+    const onScroll = () => setScrolled(window.scrollY > 24);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, [transparent]);
+
+  const overlay = transparent && !open && !scrolled;
 
   return (
     <header
       className={cn(
-        "fixed inset-x-0 top-0 z-50",
-        transparent && !open
+        "fixed inset-x-0 top-0 z-50 transition-colors duration-300",
+        overlay
           ? "text-hp-foam"
           : "border-b border-hp-border bg-hp-foam/95 text-hp-ink backdrop-blur-md",
       )}
@@ -46,7 +57,7 @@ export function SiteHeader({ transparent = false }: SiteHeaderProps) {
             height={48}
             className={cn(
               "h-12 w-12 object-contain",
-              transparent && !open ? "brightness-0 invert" : undefined,
+              overlay ? "brightness-0 invert" : undefined,
             )}
             priority
           />
@@ -68,8 +79,8 @@ export function SiteHeader({ transparent = false }: SiteHeaderProps) {
           <Button
             href="/book"
             size="sm"
-            variant={transparent && !open ? "ghost" : "secondary"}
-            className={transparent && !open ? "border-hp-foam text-hp-foam" : undefined}
+            variant={overlay ? "ghost" : "secondary"}
+            className={overlay ? "border-hp-foam text-hp-foam" : undefined}
           >
             Book stay
           </Button>

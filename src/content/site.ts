@@ -141,7 +141,7 @@ export const experiences = [
     href: "/food",
     title: "Eat & drink",
     copy: "Cafés, restaurants, bars, and happy hours across three islands.",
-    image: "/images/food/happiness-dining.png",
+    image: "/images/food/restaurant.png",
   },
   {
     href: "/wellness",
@@ -162,19 +162,19 @@ export const foodVenues = [
     location: "Boracay",
     name: "Happiness Skate Café",
     copy: "Coffee, bites, and bowl culture between beach sessions.",
-    image: "/images/food/happiness-dining.png",
+    image: "/images/experiences/skate-cafe.png",
   },
   {
     location: "El Nido",
     name: "Happiness Restaurant",
     copy: "Town tables for post-lagoon dinners and long happy hours.",
-    image: "/images/food/happiness-dining.png",
+    image: "/images/food/middle-eastern-plate.png",
   },
   {
     location: "Siargao",
     name: "Goodies",
     copy: "Café, shop, and community hub on Tourism Road.",
-    image: "/images/food/happiness-dining.png",
+    image: "/images/food/food-truck.png",
   },
   {
     location: "Siargao",

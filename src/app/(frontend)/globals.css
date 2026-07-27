@@ -62,6 +62,30 @@
   .hp-kenburns {
     animation: hp-kenburns 18s var(--hp-ease-in-out) infinite alternate;
   }
+
+  .hp-marquee {
+    display: flex;
+    overflow: hidden;
+    user-select: none;
+    gap: 0;
+  }
+
+  .hp-marquee-track {
+    display: flex;
+    flex-shrink: 0;
+    align-items: center;
+    min-width: 100%;
+    animation: hp-marquee 36s linear infinite;
+  }
+
+  /* Progressive enhancement: fade content in as it scrolls into view. */
+  @supports (animation-timeline: view()) {
+    .hp-reveal {
+      animation: hp-fade-up var(--hp-ease-out) both;
+      animation-timeline: view();
+      animation-range: entry 5% entry 45%;
+    }
+  }
 }
 
 @keyframes hp-fade-up {
@@ -84,13 +108,24 @@
   }
 }
 
+@keyframes hp-marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-100%);
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
   }
 
   .hp-fade-up,
-  .hp-kenburns {
+  .hp-kenburns,
+  .hp-marquee-track,
+  .hp-reveal {
     animation: none !important;
   }
 }
