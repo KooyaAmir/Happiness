@@ -3,7 +3,7 @@
 import { useCallback, useRef, type ReactNode } from "react";
 import { cn } from "@/lib/cn";
 
-const MAX_TILT_DEG = 5;
+const MAX_TILT_DEG = 9;
 
 /**
  * Wraps a card in a perspective container that tilts toward the pointer,

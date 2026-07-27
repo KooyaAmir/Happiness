@@ -1,7 +1,9 @@
 import Image from "next/image";
 import Link from "next/link";
 import { HeroSlideshow } from "@/components/home/HeroSlideshow";
+import { IslandCinematic } from "@/components/home/IslandCinematic";
 import { OceanCanvas } from "@/components/home/OceanCanvas";
+import { ParallaxMedia } from "@/components/home/ParallaxMedia";
 import { TiltCard } from "@/components/home/TiltCard";
 import { Button } from "@/components/ui/Button";
 import { Container } from "@/components/ui/Container";
@@ -27,26 +29,53 @@ const marqueeItems = [
   "Surf",
 ];
 
-function MarqueeBand() {
+function MarqueeRow({ reverse = false }: { reverse?: boolean }) {
   const items = [...marqueeItems, ...marqueeItems, ...marqueeItems];
-  const track = (
-    <div className="hp-marquee-track" aria-hidden>
-      {items.map((item, index) => (
-        <span
-          key={`${item}-${index}`}
-          className="flex items-center gap-6 pr-6 font-mono text-[length:var(--hp-text-xs)] uppercase tracking-[var(--hp-tracking-label)] text-hp-citrus"
-        >
-          {item}
-          <span className="text-hp-foam/40">✦</span>
-        </span>
-      ))}
+  return (
+    <div className="hp-marquee py-3">
+      <div
+        className={
+          reverse ? "hp-marquee-track hp-marquee-track-reverse" : "hp-marquee-track"
+        }
+        aria-hidden
+      >
+        {items.map((item, index) => (
+          <span
+            key={`${item}-${index}`}
+            className="flex items-center gap-6 pr-6 font-mono text-[length:var(--hp-text-xs)] uppercase tracking-[var(--hp-tracking-label)] text-hp-citrus"
+          >
+            {item}
+            <span className="text-hp-foam/40">✦</span>
+          </span>
+        ))}
+      </div>
+      <div
+        className={
+          reverse ? "hp-marquee-track hp-marquee-track-reverse" : "hp-marquee-track"
+        }
+        aria-hidden
+      >
+        {items.map((item, index) => (
+          <span
+            key={`${item}-b-${index}`}
+            className="flex items-center gap-6 pr-6 font-mono text-[length:var(--hp-text-xs)] uppercase tracking-[var(--hp-tracking-label)] text-hp-citrus"
+          >
+            {item}
+            <span className="text-hp-foam/40">✦</span>
+          </span>
+        ))}
+      </div>
     </div>
   );
+}
 
+function MarqueeBand() {
   return (
-    <div className="hp-marquee border-y border-white/10 bg-hp-ink py-4">
-      {track}
-      {track}
+    <div className="border-y border-white/10 bg-hp-ink">
+      <MarqueeRow />
+      <div className="border-t border-white/10">
+        <MarqueeRow reverse />
+      </div>
     </div>
   );
 }
@@ -68,16 +97,18 @@ export default async function Home() {
 
       <MarqueeBand />
 
+      <IslandCinematic />
+
       <Section tone="foam">
         <Container className="space-y-10">
           <div className="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
             <div className="max-w-2xl space-y-3">
               <Text as="p" variant="label" tone="lagoon" className="hp-reveal">
-                Our locations
+                Pick a base
               </Text>
               <div className="hp-mask">
                 <Text as="h2" variant="display" className="hp-mask-reveal">
-                  Three islands. One Happiness.
+                  Where will you wake up?
                 </Text>
               </div>
               <Text tone="muted" className="hp-reveal">
@@ -96,15 +127,15 @@ export default async function Home() {
                   className="group relative block overflow-hidden rounded-[var(--hp-radius-lg)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--hp-focus)]"
                 >
                   <div className="relative aspect-[3/4] overflow-hidden">
-                    <div className="absolute inset-0 hp-zoom-reveal">
+                    <ParallaxMedia speed={0.22 + index * 0.06}>
                       <Image
                         src={location.cardImage}
                         alt=""
                         fill
-                        className="object-cover transition-transform duration-[var(--hp-duration-slow)] ease-[var(--hp-ease-out)] group-hover:scale-105"
+                        className="object-cover"
                         sizes="(max-width: 768px) 100vw, 33vw"
                       />
-                    </div>
+                    </ParallaxMedia>
                     <div className="absolute inset-0 bg-gradient-to-t from-hp-ink/90 via-hp-ink/20 to-hp-ink/10" />
                     <span className="absolute left-5 top-5 font-mono text-[length:var(--hp-text-xs)] uppercase tracking-[var(--hp-tracking-label)] text-hp-foam/80">
                       {String(index + 1).padStart(2, "0")}

@@ -78,6 +78,15 @@
     animation: hp-marquee 36s linear infinite;
   }
 
+  .hp-marquee-track-reverse {
+    animation-name: hp-marquee-reverse;
+    animation-duration: 42s;
+  }
+
+  .hp-scroll-cue {
+    animation: hp-scroll-cue 1.6s var(--hp-ease-in-out) infinite;
+  }
+
   .hp-slide-in {
     animation: hp-slide-in 700ms var(--hp-ease-out) both;
   }
@@ -139,6 +148,29 @@
   }
 }
 
+@keyframes hp-marquee-reverse {
+  from {
+    transform: translateX(-100%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
+@keyframes hp-scroll-cue {
+  0%,
+  100% {
+    opacity: 0.25;
+    transform: scaleY(0.55);
+    transform-origin: top;
+  }
+  50% {
+    opacity: 1;
+    transform: scaleY(1);
+    transform-origin: top;
+  }
+}
+
 @keyframes hp-slide-in {
   from {
     opacity: 0;
@@ -187,6 +219,8 @@
   .hp-fade-up,
   .hp-kenburns,
   .hp-marquee-track,
+  .hp-marquee-track-reverse,
+  .hp-scroll-cue,
   .hp-reveal,
   .hp-slide-in,
   .hp-mask-reveal,
