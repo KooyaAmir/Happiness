@@ -30,6 +30,8 @@ export default async function DestinationToursPage({ params }: Props) {
   if (!destination) notFound();
 
   const tours = await getPublishedTours({ destinationSlug: slug });
+  const packages = tours.filter((tour) => tour.kind === "vacation-package");
+  const dayTours = tours.filter((tour) => tour.kind !== "vacation-package");
 
   return (
     <>
@@ -40,11 +42,51 @@ export default async function DestinationToursPage({ params }: Props) {
         image="/images/heroes/tours-hero.png"
         compact
       />
-      <Section tone="foam">
-        <Container className="space-y-8">
-          {tours.length ? (
+
+      {packages.length ? (
+        <Section tone="foam">
+          <Container className="space-y-8">
+            <div className="max-w-2xl space-y-3">
+              <Text as="h2" variant="title">
+                Vacation packages
+              </Text>
+              <Text tone="muted">Multi-day trips — enquire with preferred dates.</Text>
+            </div>
             <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-              {tours.map((tour) => (
+              {packages.map((tour) => (
+                <ImageCard
+                  key={tour.id}
+                  href={`/tours/${slug}/${tour.slug}`}
+                  image={tour.image || "/images/heroes/tours-hero.png"}
+                  title={tour.title}
+                  copy={
+                    tour.priceOnEnquiry
+                      ? `${tour.duration || "Flexible"} · Price on enquiry`
+                      : `${tour.duration || "Flexible"} · from ₱${tour.priceFrom?.toLocaleString() || "—"}`
+                  }
+                  meta="Package"
+                />
+              ))}
+            </div>
+          </Container>
+        </Section>
+      ) : null}
+
+      <Section tone={packages.length ? "mist" : "foam"}>
+        <Container className="space-y-8">
+          <div className="max-w-2xl space-y-3">
+            <Text as="h2" variant="title">
+              Day tours & activities
+            </Text>
+            <Text tone="muted">
+              {dayTours.length
+                ? `${dayTours.length} published trips in ${destination.name}.`
+                : `No day tours published for ${destination.name} yet.`}
+            </Text>
+          </div>
+          {dayTours.length ? (
+            <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+              {dayTours.map((tour) => (
                 <ImageCard
                   key={tour.id}
                   href={`/tours/${slug}/${tour.slug}`}
@@ -58,9 +100,7 @@ export default async function DestinationToursPage({ params }: Props) {
                 />
               ))}
             </div>
-          ) : (
-            <Text tone="muted">No published tours for {destination.name} yet.</Text>
-          )}
+          ) : null}
         </Container>
       </Section>
     </>

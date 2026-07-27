@@ -5,6 +5,7 @@ export const Tours: CollectionConfig = {
   admin: {
     useAsTitle: "title",
     defaultColumns: ["title", "destination", "kind", "priceFrom", "_status"],
+    group: "Tours",
   },
   versions: {
     drafts: true,

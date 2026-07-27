@@ -16,8 +16,11 @@ export const dynamic = "force-dynamic";
 export default async function ToursPage() {
   const [destinations, tours] = await Promise.all([
     getDestinationsWithTours(),
-    getPublishedTours({ limit: 24 }),
+    getPublishedTours({ limit: 100 }),
   ]);
+
+  const packages = tours.filter((tour) => tour.kind === "vacation-package");
+  const dayTours = tours.filter((tour) => tour.kind !== "vacation-package");
 
   return (
     <>
@@ -49,20 +52,51 @@ export default async function ToursPage() {
         </Container>
       </Section>
 
+      {packages.length ? (
+        <Section tone="foam">
+          <Container className="space-y-8">
+            <div className="max-w-2xl space-y-3">
+              <Text as="h2" variant="title">
+                Vacation packages
+              </Text>
+              <Text tone="muted">
+                Multi-day trips shaped around your dates — enquiry only for now.
+              </Text>
+            </div>
+            <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+              {packages.map((tour) => (
+                <ImageCard
+                  key={tour.id}
+                  href={`/tours/${tour.destinationSlug}/${tour.slug}`}
+                  image={tour.image || "/images/heroes/tours-hero.png"}
+                  title={tour.title}
+                  copy={
+                    tour.priceOnEnquiry
+                      ? `${tour.duration || "Flexible"} · Price on enquiry`
+                      : `${tour.duration || "Flexible"} · from ₱${tour.priceFrom?.toLocaleString() || "—"}`
+                  }
+                  meta={`Package · ${tour.destinationName}`}
+                />
+              ))}
+            </div>
+          </Container>
+        </Section>
+      ) : null}
+
       <Section tone="mist">
         <Container className="space-y-8">
           <div className="max-w-2xl space-y-3">
             <Text as="h2" variant="title">
-              All TREVL trips
+              Day tours & activities
             </Text>
             <Text tone="muted">
-              {tours.length
-                ? `${tours.length} tours migrated into the dashboard. Enquiry-based booking for now.`
+              {dayTours.length
+                ? `${dayTours.length} tours in the dashboard. Enquiry-based booking for now.`
                 : "Run npm run seed:tours to migrate the live catalog into Payload."}
             </Text>
           </div>
           <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
-            {tours.map((tour) => (
+            {dayTours.map((tour) => (
               <ImageCard
                 key={tour.id}
                 href={`/tours/${tour.destinationSlug}/${tour.slug}`}

@@ -52,11 +52,22 @@ export default async function LocationStayPage({ params }: Props) {
                 </li>
               ))}
             </ul>
+            {location.foodScene ? (
+              <div className="space-y-2 pt-2">
+                <Text as="h3" variant="heading">
+                  Eat & drink
+                </Text>
+                <Text tone="muted">{location.foodScene}</Text>
+                <Button href="/food" variant="ghost" className="text-hp-ink">
+                  See all food & drink
+                </Button>
+              </div>
+            ) : null}
             <div className="flex flex-wrap gap-3 pt-2">
               <Button href={`/book?location=${location.slug}`} size="lg">
                 Book your stay
               </Button>
-              <Button href="/tours" variant="ghost" className="text-hp-ink">
+              <Button href={`/tours/${location.slug}`} variant="ghost" className="text-hp-ink">
                 Explore tours
               </Button>
             </div>

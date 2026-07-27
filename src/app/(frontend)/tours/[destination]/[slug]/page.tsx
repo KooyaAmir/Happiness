@@ -1,14 +1,17 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Button } from "@/components/ui/Button";
 import { Container } from "@/components/ui/Container";
 import { PageHero } from "@/components/ui/PageHero";
 import { Section } from "@/components/ui/Section";
 import { Text } from "@/components/ui/Text";
+import { JsonLd, tourJsonLd } from "@/components/seo/JsonLd";
 import { getTourBySlug } from "@/lib/tours";
 
 type Props = {
   params: Promise<{ destination: string; slug: string }>;
+  searchParams: Promise<{ enquiry?: string }>;
 };
 
 export const dynamic = "force-dynamic";
@@ -23,8 +26,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   };
 }
 
-export default async function TourDetailPage({ params }: Props) {
-  const { slug } = await params;
+export default async function TourDetailPage({ params, searchParams }: Props) {
+  const { destination, slug } = await params;
+  const { enquiry } = await searchParams;
   const tour = await getTourBySlug(slug);
   if (!tour) notFound();
 
@@ -34,10 +38,17 @@ export default async function TourDetailPage({ params }: Props) {
       ? `From ₱${tour.priceFrom.toLocaleString()}`
       : "Ask for pricing";
 
+  const returnTo = `/tours/${destination}/${slug}`;
+
   return (
     <>
+      <JsonLd data={tourJsonLd(tour)} />
       <PageHero
-        eyebrow={tour.destinationName}
+        eyebrow={
+          tour.kind === "vacation-package"
+            ? `Package · ${tour.destinationName}`
+            : tour.destinationName
+        }
         title={tour.title}
         description={`${tour.duration || "Flexible timing"} · ${priceLabel}. Send an enquiry and our travel team will confirm details.`}
         image={tour.image || "/images/heroes/tours-hero.png"}
@@ -52,6 +63,24 @@ export default async function TourDetailPage({ params }: Props) {
                   Overview
                 </Text>
                 <Text tone="muted">{tour.summary}</Text>
+              </div>
+            ) : null}
+
+            {tour.itinerary?.length ? (
+              <div className="space-y-3">
+                <Text as="h2" variant="heading">
+                  Itinerary
+                </Text>
+                <ul className="space-y-4">
+                  {tour.itinerary.map((row, index) => (
+                    <li key={`${row?.title}-${index}`} className="space-y-1">
+                      <Text as="p" variant="heading">
+                        {row?.title}
+                      </Text>
+                      {row?.description ? <Text tone="muted">{row.description}</Text> : null}
+                    </li>
+                  ))}
+                </ul>
               </div>
             ) : null}
 
@@ -84,6 +113,21 @@ export default async function TourDetailPage({ params }: Props) {
                 </ul>
               </div>
             ) : null}
+
+            {tour.notes?.length ? (
+              <div className="space-y-3">
+                <Text as="h2" variant="heading">
+                  Please note
+                </Text>
+                <ul className="space-y-2">
+                  {tour.notes.map((row, index) => (
+                    <li key={`${row?.item}-${index}`}>
+                      <Text tone="muted">{row?.item}</Text>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ) : null}
           </div>
 
           <form
@@ -92,10 +136,31 @@ export default async function TourDetailPage({ params }: Props) {
             method="post"
           >
             <Text as="h3" variant="heading">
-              Enquire
+              {tour.kind === "vacation-package" ? "Enquire about this package" : "Enquire"}
             </Text>
+
+            {enquiry === "sent" ? (
+              <p className="rounded-[var(--hp-radius-md)] border border-hp-lagoon/30 bg-[color-mix(in_oklab,var(--hp-lagoon)_8%,white)] px-3 py-2 text-[length:var(--hp-text-sm)] text-hp-lagoon">
+                Enquiry sent. Our travel team will get back to you soon.
+              </p>
+            ) : null}
+            {enquiry === "error" ? (
+              <p className="rounded-[var(--hp-radius-md)] border border-hp-coral/40 bg-[color-mix(in_oklab,var(--hp-coral)_10%,white)] px-3 py-2 text-[length:var(--hp-text-sm)] text-hp-ink">
+                Something went wrong. Please try again or{" "}
+                <Link href="/contact" className="underline">
+                  contact us
+                </Link>
+                .
+              </p>
+            ) : null}
+
             <input type="hidden" name="tourId" value={tour.id} />
             <input type="hidden" name="tourTitle" value={tour.title} />
+            <input type="hidden" name="returnTo" value={returnTo} />
+            <label className="absolute left-[-10000px] h-px w-px overflow-hidden">
+              Company website
+              <input type="text" name="companyWebsite" tabIndex={-1} autoComplete="off" />
+            </label>
             <label className="block space-y-2">
               <span className="font-mono text-[length:var(--hp-text-xs)] uppercase tracking-[var(--hp-tracking-label)]">
                 Travellers
@@ -147,6 +212,16 @@ export default async function TourDetailPage({ params }: Props) {
               <input
                 name="phone"
                 required
+                className="w-full rounded-[var(--hp-radius-md)] border border-hp-border px-3 py-2"
+              />
+            </label>
+            <label className="block space-y-2">
+              <span className="font-mono text-[length:var(--hp-text-xs)] uppercase tracking-[var(--hp-tracking-label)]">
+                Message
+              </span>
+              <textarea
+                name="message"
+                rows={3}
                 className="w-full rounded-[var(--hp-radius-md)] border border-hp-border px-3 py-2"
               />
             </label>

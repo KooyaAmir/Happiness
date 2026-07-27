@@ -4,14 +4,19 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "next dev --no-turbo",
+    "dev": "next dev",
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
     "payload": "payload",
     "generate:types": "payload generate:types",
     "generate:importmap": "payload generate:importmap",
-    "seed:tours": "tsx scripts/seed-tours.ts"
+    "seed:tours": "tsx scripts/seed-tours.ts",
+    "seed:events": "tsx scripts/seed-events.ts",
+    "seed:jobs": "tsx scripts/seed-jobs.ts",
+    "seed:posts": "tsx scripts/seed-posts.ts",
+    "seed:all": "npm run seed:tours && npm run seed:events && npm run seed:jobs && npm run seed:posts",
+    "fix:sqlite-index": "tsx scripts/fix-sqlite-index.ts"
   },
   "dependencies": {
     "@payloadcms/db-sqlite": "^3.86.0",

@@ -72,6 +72,13 @@ export interface Config {
     destinations: Destination;
     tours: Tour;
     'tour-enquiries': TourEnquiry;
+    events: Event;
+    jobs: Job;
+    'job-applications': JobApplication;
+    'contact-enquiries': ContactEnquiry;
+    'surf-enquiries': SurfEnquiry;
+    'lead-enquiries': LeadEnquiry;
+    posts: Post;
     'payload-kv': PayloadKv;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
@@ -84,6 +91,13 @@ export interface Config {
     destinations: DestinationsSelect<false> | DestinationsSelect<true>;
     tours: ToursSelect<false> | ToursSelect<true>;
     'tour-enquiries': TourEnquiriesSelect<false> | TourEnquiriesSelect<true>;
+    events: EventsSelect<false> | EventsSelect<true>;
+    jobs: JobsSelect<false> | JobsSelect<true>;
+    'job-applications': JobApplicationsSelect<false> | JobApplicationsSelect<true>;
+    'contact-enquiries': ContactEnquiriesSelect<false> | ContactEnquiriesSelect<true>;
+    'surf-enquiries': SurfEnquiriesSelect<false> | SurfEnquiriesSelect<true>;
+    'lead-enquiries': LeadEnquiriesSelect<false> | LeadEnquiriesSelect<true>;
+    posts: PostsSelect<false> | PostsSelect<true>;
     'payload-kv': PayloadKvSelect<false> | PayloadKvSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
@@ -291,6 +305,147 @@ export interface TourEnquiry {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "events".
+ */
+export interface Event {
+  id: number;
+  title: string;
+  location: 'boracay' | 'el-nido' | 'siargao';
+  venue: string;
+  /**
+   * Public schedule line, e.g. Daily · 12:00 pm – 8:00 pm
+   */
+  scheduleLabel: string;
+  /**
+   * Optional — used for sorting / future calendar views
+   */
+  startsAt?: string | null;
+  endsAt?: string | null;
+  description?: string | null;
+  featured?: boolean | null;
+  updatedAt: string;
+  createdAt: string;
+  _status?: ('draft' | 'published') | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "jobs".
+ */
+export interface Job {
+  id: number;
+  title: string;
+  slug: string;
+  location: 'boracay' | 'el-nido' | 'siargao';
+  venue: string;
+  employmentType?: ('full-time' | 'part-time' | 'seasonal' | 'contract') | null;
+  /**
+   * Short blurb on the careers list
+   */
+  summary?: string | null;
+  description?: string | null;
+  /**
+   * Uncheck to hide from the public careers board
+   */
+  open?: boolean | null;
+  updatedAt: string;
+  createdAt: string;
+  _status?: ('draft' | 'published') | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "job-applications".
+ */
+export interface JobApplication {
+  id: number;
+  fullName: string;
+  email: string;
+  phone?: string | null;
+  job?: (number | null) | Job;
+  jobTitle?: string | null;
+  message?: string | null;
+  /**
+   * Optional CV upload (PDF or Word)
+   */
+  cv?: (number | null) | Media;
+  status?: ('new' | 'reviewing' | 'interview' | 'closed') | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "contact-enquiries".
+ */
+export interface ContactEnquiry {
+  id: number;
+  fullName: string;
+  email: string;
+  location: 'boracay' | 'el-nido' | 'siargao' | 'general';
+  message: string;
+  status?: ('new' | 'in-progress' | 'closed') | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "surf-enquiries".
+ */
+export interface SurfEnquiry {
+  id: number;
+  fullName: string;
+  email?: string | null;
+  phone: string;
+  country: string;
+  startDate: string;
+  message?: string | null;
+  status?: ('new' | 'in-progress' | 'closed') | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * Generic leads (packages, wellness, misc).
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "lead-enquiries".
+ */
+export interface LeadEnquiry {
+  id: number;
+  fullName: string;
+  email: string;
+  phone?: string | null;
+  source: 'vacation-package' | 'wellness' | 'other';
+  subject?: string | null;
+  message: string;
+  status?: ('new' | 'in-progress' | 'closed') | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "posts".
+ */
+export interface Post {
+  id: number;
+  title: string;
+  slug: string;
+  excerpt: string;
+  /**
+   * Article body. Use blank lines between paragraphs.
+   */
+  content: string;
+  category: 'travel' | 'stays' | 'food' | 'wellness' | 'surf' | 'guides';
+  publishedAt: string;
+  /**
+   * Public image path, e.g. /images/locations/boracay-white-beach.png
+   */
+  coverImage?: string | null;
+  seoTitle?: string | null;
+  seoDescription?: string | null;
+  updatedAt: string;
+  createdAt: string;
+  _status?: ('draft' | 'published') | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-kv".
  */
 export interface PayloadKv {
@@ -332,6 +487,34 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'tour-enquiries';
         value: number | TourEnquiry;
+      } | null)
+    | ({
+        relationTo: 'events';
+        value: number | Event;
+      } | null)
+    | ({
+        relationTo: 'jobs';
+        value: number | Job;
+      } | null)
+    | ({
+        relationTo: 'job-applications';
+        value: number | JobApplication;
+      } | null)
+    | ({
+        relationTo: 'contact-enquiries';
+        value: number | ContactEnquiry;
+      } | null)
+    | ({
+        relationTo: 'surf-enquiries';
+        value: number | SurfEnquiry;
+      } | null)
+    | ({
+        relationTo: 'lead-enquiries';
+        value: number | LeadEnquiry;
+      } | null)
+    | ({
+        relationTo: 'posts';
+        value: number | Post;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -494,6 +677,117 @@ export interface TourEnquiriesSelect<T extends boolean = true> {
   status?: T;
   updatedAt?: T;
   createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "events_select".
+ */
+export interface EventsSelect<T extends boolean = true> {
+  title?: T;
+  location?: T;
+  venue?: T;
+  scheduleLabel?: T;
+  startsAt?: T;
+  endsAt?: T;
+  description?: T;
+  featured?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  _status?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "jobs_select".
+ */
+export interface JobsSelect<T extends boolean = true> {
+  title?: T;
+  slug?: T;
+  location?: T;
+  venue?: T;
+  employmentType?: T;
+  summary?: T;
+  description?: T;
+  open?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  _status?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "job-applications_select".
+ */
+export interface JobApplicationsSelect<T extends boolean = true> {
+  fullName?: T;
+  email?: T;
+  phone?: T;
+  job?: T;
+  jobTitle?: T;
+  message?: T;
+  cv?: T;
+  status?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "contact-enquiries_select".
+ */
+export interface ContactEnquiriesSelect<T extends boolean = true> {
+  fullName?: T;
+  email?: T;
+  location?: T;
+  message?: T;
+  status?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "surf-enquiries_select".
+ */
+export interface SurfEnquiriesSelect<T extends boolean = true> {
+  fullName?: T;
+  email?: T;
+  phone?: T;
+  country?: T;
+  startDate?: T;
+  message?: T;
+  status?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "lead-enquiries_select".
+ */
+export interface LeadEnquiriesSelect<T extends boolean = true> {
+  fullName?: T;
+  email?: T;
+  phone?: T;
+  source?: T;
+  subject?: T;
+  message?: T;
+  status?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "posts_select".
+ */
+export interface PostsSelect<T extends boolean = true> {
+  title?: T;
+  slug?: T;
+  excerpt?: T;
+  content?: T;
+  category?: T;
+  publishedAt?: T;
+  coverImage?: T;
+  seoTitle?: T;
+  seoDescription?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  _status?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema

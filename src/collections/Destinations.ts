@@ -5,6 +5,7 @@ export const Destinations: CollectionConfig = {
   admin: {
     useAsTitle: "name",
     defaultColumns: ["name", "slug", "updatedAt"],
+    group: "Tours",
   },
   access: {
     read: () => true,

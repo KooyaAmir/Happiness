@@ -47,16 +47,67 @@ export default async function VenuePage({ params }: Props) {
         compact
       />
       <Section tone="foam">
-        <Container className="max-w-3xl space-y-6">
-          <Text tone="muted">
-            Full room types, rates, and live availability will connect through Boom.
-            For now you can browse the venue story and jump into booking search.
-          </Text>
-          <div className="flex flex-wrap gap-3">
-            <Button href={`/book?location=${location.slug}`} size="lg">
+        <Container className="grid gap-10 lg:grid-cols-[1.15fr_0.85fr]">
+          <div className="space-y-6">
+            {venue.vibe ? (
+              <div className="space-y-3">
+                <Text as="h2" variant="title">
+                  The vibe
+                </Text>
+                <Text tone="muted">{venue.vibe}</Text>
+              </div>
+            ) : null}
+
+            {venue.amenities?.length ? (
+              <div className="space-y-3">
+                <Text as="h2" variant="heading">
+                  Amenities
+                </Text>
+                <ul className="space-y-2">
+                  {venue.amenities.map((item) => (
+                    <li key={item} className="border-b border-hp-border pb-2">
+                      <Text>{item}</Text>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ) : null}
+
+            {venue.dining?.length ? (
+              <div className="space-y-3">
+                <Text as="h2" variant="heading">
+                  Eat & drink on site
+                </Text>
+                <ul className="space-y-2">
+                  {venue.dining.map((item) => (
+                    <li key={item}>
+                      <Text tone="muted">{item}</Text>
+                    </li>
+                  ))}
+                </ul>
+                <Button href="/food" variant="ghost" className="text-hp-ink">
+                  Explore all food & drink
+                </Button>
+              </div>
+            ) : null}
+
+            <Text tone="muted">
+              Live room types and rates connect through Boom once credentials are live.
+              You can still search dates now and our team can help meanwhile.
+            </Text>
+          </div>
+
+          <div className="space-y-4 rounded-[var(--hp-radius-lg)] border border-hp-border bg-white p-6">
+            <Text as="h3" variant="heading">
+              Plan your stay
+            </Text>
+            <Button href={`/book?location=${location.slug}`} className="w-full" size="lg">
               Check availability
             </Button>
-            <Button href={`/stays/${location.slug}`} variant="ghost" className="text-hp-ink">
+            <Button href="/contact" variant="secondary" className="w-full">
+              Ask the island team
+            </Button>
+            <Button href={`/stays/${location.slug}`} variant="ghost" className="w-full text-hp-ink">
               Back to {location.name}
             </Button>
           </div>

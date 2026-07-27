@@ -5,6 +5,7 @@ export const TourEnquiries: CollectionConfig = {
   admin: {
     useAsTitle: "fullName",
     defaultColumns: ["fullName", "tourTitle", "preferredDate", "createdAt"],
+    group: "Leads",
   },
   access: {
     create: () => true,
