@@ -1,0 +1,96 @@
+@import "tailwindcss";
+@import "../styles/tokens.css";
+
+@layer base {
+  * {
+    box-sizing: border-box;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    margin: 0;
+    min-height: 100%;
+    background: var(--hp-surface);
+    color: var(--hp-text);
+    font-family: var(--hp-font-body);
+    text-rendering: optimizeLegibility;
+  }
+
+  ::selection {
+    background: color-mix(in oklab, var(--hp-citrus) 70%, white);
+    color: var(--hp-ink);
+  }
+
+  a {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  img {
+    max-width: 100%;
+    display: block;
+  }
+}
+
+@layer utilities {
+  .hp-grain {
+    background-image:
+      radial-gradient(circle at 20% 20%, rgb(198 217 78 / 0.12), transparent 35%),
+      radial-gradient(circle at 80% 10%, rgb(26 138 150 / 0.18), transparent 40%),
+      linear-gradient(160deg, #07171c 0%, #0f5c66 48%, #143039 100%);
+  }
+
+  .hp-fade-up {
+    animation: hp-fade-up var(--hp-duration-slow) var(--hp-ease-out) both;
+  }
+
+  .hp-fade-up-delay-1 {
+    animation-delay: 120ms;
+  }
+
+  .hp-fade-up-delay-2 {
+    animation-delay: 240ms;
+  }
+
+  .hp-fade-up-delay-3 {
+    animation-delay: 360ms;
+  }
+
+  .hp-kenburns {
+    animation: hp-kenburns 18s var(--hp-ease-in-out) infinite alternate;
+  }
+}
+
+@keyframes hp-fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes hp-kenburns {
+  from {
+    transform: scale(1.04) translate3d(0, 0, 0);
+  }
+  to {
+    transform: scale(1.12) translate3d(-1.5%, -1%, 0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  .hp-fade-up,
+  .hp-kenburns {
+    animation: none !important;
+  }
+}

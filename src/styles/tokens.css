@@ -1,0 +1,111 @@
+/**
+ * Happiness Philippines — Design Tokens
+ * Direction: cinematic tropical — lagoon depth, foam light, citrus spark.
+ * Refs internalized: Lusion (spatial motion), Masar (destination clarity),
+ * Virgin Galactic (brand-as-hero), 2050.earth (atmospheric craft).
+ */
+
+:root {
+  /* ——— Color ——— */
+  --hp-ink: #07171c;
+  --hp-ink-soft: #143039;
+  --hp-lagoon: #0f5c66;
+  --hp-lagoon-bright: #1a8a96;
+  --hp-foam: #f4f7f5;
+  --hp-mist: #d7e4df;
+  --hp-sand: #cbb89a;
+  --hp-citrus: #c6d94e;
+  --hp-coral: #e07a5f;
+  --hp-white: #ffffff;
+  --hp-black: #02090b;
+
+  --hp-surface: var(--hp-foam);
+  --hp-surface-inverse: var(--hp-ink);
+  --hp-text: var(--hp-ink);
+  --hp-text-muted: color-mix(in oklab, var(--hp-ink) 62%, transparent);
+  --hp-text-inverse: var(--hp-foam);
+  --hp-border: color-mix(in oklab, var(--hp-ink) 12%, transparent);
+  --hp-border-strong: color-mix(in oklab, var(--hp-ink) 28%, transparent);
+  --hp-focus: var(--hp-lagoon-bright);
+
+  /* ——— Typography ——— */
+  --hp-font-display: var(--font-display), ui-sans-serif, system-ui, sans-serif;
+  --hp-font-body: var(--font-body), ui-sans-serif, system-ui, sans-serif;
+  --hp-font-mono: var(--font-mono), ui-monospace, monospace;
+
+  --hp-text-xs: clamp(0.75rem, 0.7rem + 0.2vw, 0.8125rem);
+  --hp-text-sm: clamp(0.875rem, 0.82rem + 0.25vw, 0.9375rem);
+  --hp-text-base: clamp(1rem, 0.95rem + 0.3vw, 1.125rem);
+  --hp-text-lg: clamp(1.125rem, 1.05rem + 0.4vw, 1.25rem);
+  --hp-text-xl: clamp(1.35rem, 1.15rem + 0.9vw, 1.75rem);
+  --hp-text-2xl: clamp(1.75rem, 1.35rem + 1.6vw, 2.5rem);
+  --hp-text-3xl: clamp(2.25rem, 1.6rem + 2.8vw, 3.75rem);
+  --hp-text-hero: clamp(2.75rem, 1.8rem + 4.5vw, 5.5rem);
+
+  --hp-leading-tight: 1.05;
+  --hp-leading-snug: 1.25;
+  --hp-leading-normal: 1.55;
+  --hp-tracking-display: -0.03em;
+  --hp-tracking-label: 0.14em;
+
+  /* ——— Space ——— */
+  --hp-space-1: 0.25rem;
+  --hp-space-2: 0.5rem;
+  --hp-space-3: 0.75rem;
+  --hp-space-4: 1rem;
+  --hp-space-5: 1.5rem;
+  --hp-space-6: 2rem;
+  --hp-space-7: 3rem;
+  --hp-space-8: 4rem;
+  --hp-space-9: 6rem;
+  --hp-space-10: 8rem;
+
+  --hp-container: 72rem;
+  --hp-container-wide: 88rem;
+  --hp-gutter: clamp(1.25rem, 4vw, 2.5rem);
+
+  /* ——— Radius / Elevation ——— */
+  --hp-radius-sm: 0.25rem;
+  --hp-radius-md: 0.5rem;
+  --hp-radius-lg: 1rem;
+  --hp-radius-pill: 999px;
+
+  --hp-shadow-soft: 0 18px 50px color-mix(in oklab, var(--hp-ink) 18%, transparent);
+  --hp-shadow-glow: 0 0 40px color-mix(in oklab, var(--hp-citrus) 25%, transparent);
+
+  /* ——— Motion ——— */
+  --hp-ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --hp-ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+  --hp-duration-fast: 160ms;
+  --hp-duration: 320ms;
+  --hp-duration-slow: 700ms;
+
+  /* ——— Layout chrome ——— */
+  --hp-header-h: 4.5rem;
+}
+
+@theme inline {
+  --color-hp-ink: var(--hp-ink);
+  --color-hp-ink-soft: var(--hp-ink-soft);
+  --color-hp-lagoon: var(--hp-lagoon);
+  --color-hp-lagoon-bright: var(--hp-lagoon-bright);
+  --color-hp-foam: var(--hp-foam);
+  --color-hp-mist: var(--hp-mist);
+  --color-hp-sand: var(--hp-sand);
+  --color-hp-citrus: var(--hp-citrus);
+  --color-hp-coral: var(--hp-coral);
+  --color-hp-surface: var(--hp-surface);
+  --color-hp-text: var(--hp-text);
+  --color-hp-text-muted: var(--hp-text-muted);
+  --color-hp-text-inverse: var(--hp-text-inverse);
+  --color-hp-border: var(--hp-border);
+
+  --font-display: var(--hp-font-display);
+  --font-body: var(--hp-font-body);
+  --font-mono: var(--hp-font-mono);
+
+  --radius-hp-sm: var(--hp-radius-sm);
+  --radius-hp-md: var(--hp-radius-md);
+  --radius-hp-lg: var(--hp-radius-lg);
+  --radius-hp-pill: var(--hp-radius-pill);
+}
