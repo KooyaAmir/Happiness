@@ -1,11 +1,13 @@
 import Image from "next/image";
 import Link from "next/link";
 import { CursorGlow } from "@/components/home/CursorGlow";
+import { HappinessMask } from "@/components/home/HappinessMask";
 import { HeroSlideshow } from "@/components/home/HeroSlideshow";
 import { HorizontalTours } from "@/components/home/HorizontalTours";
 import { IslandCinematic } from "@/components/home/IslandCinematic";
 import { OceanCanvas } from "@/components/home/OceanCanvas";
 import { ParallaxMedia } from "@/components/home/ParallaxMedia";
+import { PhotoOrbit } from "@/components/home/PhotoOrbit";
 import { TiltCard } from "@/components/home/TiltCard";
 import { Button } from "@/components/ui/Button";
 import { Container } from "@/components/ui/Container";
@@ -19,68 +21,6 @@ import { getPublishedPosts, postCategoryLabel } from "@/lib/posts";
 import { getPublishedTours } from "@/lib/tours";
 
 export const dynamic = "force-dynamic";
-
-const marqueeItems = [
-  "Boracay",
-  "El Nido",
-  "Siargao",
-  "Stays",
-  "Tours",
-  "Food",
-  "Wellness",
-  "Surf",
-];
-
-function MarqueeRow({ reverse = false }: { reverse?: boolean }) {
-  const items = [...marqueeItems, ...marqueeItems, ...marqueeItems];
-  return (
-    <div className="hp-marquee py-3">
-      <div
-        className={
-          reverse ? "hp-marquee-track hp-marquee-track-reverse" : "hp-marquee-track"
-        }
-        aria-hidden
-      >
-        {items.map((item, index) => (
-          <span
-            key={`${item}-${index}`}
-            className="flex items-center gap-6 pr-6 font-mono text-[length:var(--hp-text-xs)] uppercase tracking-[var(--hp-tracking-label)] text-hp-citrus"
-          >
-            {item}
-            <span className="text-hp-foam/40">✦</span>
-          </span>
-        ))}
-      </div>
-      <div
-        className={
-          reverse ? "hp-marquee-track hp-marquee-track-reverse" : "hp-marquee-track"
-        }
-        aria-hidden
-      >
-        {items.map((item, index) => (
-          <span
-            key={`${item}-b-${index}`}
-            className="flex items-center gap-6 pr-6 font-mono text-[length:var(--hp-text-xs)] uppercase tracking-[var(--hp-tracking-label)] text-hp-citrus"
-          >
-            {item}
-            <span className="text-hp-foam/40">✦</span>
-          </span>
-        ))}
-      </div>
-    </div>
-  );
-}
-
-function MarqueeBand() {
-  return (
-    <div className="border-y border-white/10 bg-hp-ink">
-      <MarqueeRow />
-      <div className="border-t border-white/10">
-        <MarqueeRow reverse />
-      </div>
-    </div>
-  );
-}
 
 export default async function Home() {
   const [featuredTours, posts, events, jobs] = await Promise.all([
@@ -98,7 +38,9 @@ export default async function Home() {
       <CursorGlow />
       <HeroSlideshow />
 
-      <MarqueeBand />
+      <HappinessMask />
+
+      <PhotoOrbit />
 
       <IslandCinematic />
 

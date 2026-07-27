@@ -87,6 +87,14 @@
     animation: hp-scroll-cue 1.6s var(--hp-ease-in-out) infinite;
   }
 
+  .hp-mask-word {
+    color: transparent;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    -webkit-background-clip: text;
+    will-change: background-position, transform, letter-spacing;
+  }
+
   .hp-slide-in {
     animation: hp-slide-in 700ms var(--hp-ease-out) both;
   }
